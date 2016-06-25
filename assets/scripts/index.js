@@ -1,7 +1,19 @@
 'use strict';
 
-// user require with a reference to bundle the file and use it in this file
-// var example = require('./example');
+const authEvents = require('./auth/events.js');
+const characterEvents = require('./characters/events.js');
+const ui = require('./auth/ui.js');
 
-// use require without a reference to ensure a file is bundled
-require('./example');
+const navFormCollapse = () => {
+  $('.nav-forms').collapse('hide');
+};
+
+// On document ready
+$(() => {
+  authEvents.addHandlers();
+  characterEvents.addHandlers();
+  $('.signed-in').hide();
+  $('#sign-in-nav').on('click', navFormCollapse);
+  $('#sign-up-nav').on('click', navFormCollapse);
+  $('#change-password-nav').on('click', navFormCollapse);
+});

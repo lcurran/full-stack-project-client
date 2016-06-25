@@ -3,39 +3,40 @@
 const app = require('../app.js');
 
 const signUp = (data) => {
-  return $.ajax({
-    url: app.host + '/sign-up',
-    method: "POST",
-    data: data,
+
+    return $.ajax ({
+      url: app.host + '/sign-up/',
+      method: 'POST',
+      data: data
   });
 };
 
 const signIn = (data) => {
-  return $.ajax({
-    url: app.host + '/sign-in',
-    method: "POST",
-    data: data,
+  return $.ajax ({
+    url: app.host + '/sign-in/',
+    method: 'POST',
+    data
   });
 };
 
 const signOut = () => {
-  return $.ajax({
+  return $.ajax ({
     url: app.host + '/sign-out/' + app.user.id,
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      Authorization: 'Token token=' + app.user.token,
-    },
+      Authorization: 'Token token=' + app.user.token
+    }
   });
 };
 
 const changePassword = (data) => {
   return $.ajax({
     url: app.host + '/change-password/' + app.user.id,
-    method: "PATCH",
+    method: 'PATCH',
     headers: {
       Authorization: 'Token token=' + app.user.token,
     },
-    data: data,
+    data,
   });
 };
 
