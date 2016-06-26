@@ -21,6 +21,20 @@ const onUpdateCharacter = (event) => {
   .fail(ui.failure);
 };
 
+const onNewCharacter = () => {
+  event.preventDefault();
+  api.getStats()
+  .done(ui.statsForm)
+  .fail(ui.failure);
+  api.getSkills()
+  .done(ui.skillsForm)
+  .fail(ui.failure);
+  api.getSpells()
+  .done(ui.spellsForm)
+  .fail(ui.failure);
+};
+
+
 const addHandlers = () => {
   // $("#list-characters").on('click', onListCharacters);
   $("#update-character").on('submit', onUpdateCharacter);
@@ -29,4 +43,5 @@ const addHandlers = () => {
 module.exports = {
   addHandlers,
   onListCharacters,
+  onNewCharacter,
 };

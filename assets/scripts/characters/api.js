@@ -23,7 +23,31 @@ const updateCharacter = (data) => {
   });
 };
 
+const getSkills = () => {
+  return $.ajax({
+    url: app.host + '/skills',
+    method: "GET"
+  });
+};
+
+const getStats = () => {
+  return $.ajax({
+    url: app.host + '/stats',
+    method: "GET"
+  });
+};
+
+const getSpells = () => {
+  return $.ajax({
+    url: app.host + '/spells',
+    method: "GET"
+  });
+};
+
 module.exports = {
   listCharacters,
   updateCharacter,
+  getSkills,
+  getStats,
+  getSpells,
 };

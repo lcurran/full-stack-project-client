@@ -1,5 +1,21 @@
-body {
-  margin-top: 70px;
+.container-fluid {
+  padding: 0;
+  width: 100%;
+}
+
+.container {
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.navbar-static-top {
+  border-width: 0 0 1px;
+  height: 50;
+  line-height: 50px;
+  padding-left: 30px;
+  padding-right: 20px;
+  width: 100%;
+  z-index: 1000;
 }
 
 .navbar-inverse {
@@ -7,11 +23,12 @@ body {
   border-color: $black-ish;
 }
 
-.navbar-fixed-top {
-  top: 0;
-  border-width: 0 0 1px;
-  height: 30px;
-  line-height: 30px;
+.form-group {
+  padding: 2px;
+
+  input[type="number"] {
+    width: 75px;
+  }
 }
 
 #diceroller {

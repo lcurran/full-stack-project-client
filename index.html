@@ -5,9 +5,9 @@
     <script src="vendor.bundle.js" type="text/javascript" charset="utf-8" defer></script>
     <script src="bundle.js" type="text/javascript" charset="utf-8" defer></script>
   </head>
-  <body class="container-fluid">
-    <nav class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container-fluid">
+  <body>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container-fluid row">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
@@ -22,19 +22,13 @@
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a role="button" id="sign-in-nav" class="navbar-toggler signed-out" type="button" data-toggle="collapse"
-              data-target="#sign-in" aria-hidden="true">Sign in</a>
+              <a href="#sign-in" id="sign-in-nav" class="signed-out" data-toggle="collapse" aria-expanded="false" aria-controls="sign-in">Sign in</a>
             </li>
             <li>
-              <a role="button" id="sign-up-nav" class="navbar-toggler signed-out"
-              type="button" data-toggle="collapse"
-              data-target="#sign-up" aria-hidden="true">Sign up</a>
+              <a href="#sign-up" id="sign-up-nav" class="signed-out" data-toggle="collapse" aria-expanded="false" aria-controls="sign-up">Sign up</a>
             </li>
             <li>
-              <a role="button" id="change-password-nav"
-              class="navbar-toggler signed-in" type="button"
-              data-toggle="collapse" data-target="#change-password"
-              aria-hidden="true">Change password</a>
+              <a href="#change-password" id="change-password-nav" class="signed-in" data-toggle="collapse" aria-expanded="false" aria-controls="change-password">Change password</a>
             </li>
             <li>
               <a id="sign-out" class="signed-in" role="button" type="button">Sign
@@ -44,10 +38,10 @@
         </div>
       </div>
     </nav>
-    <section class="container-fluid row">
+    <section class="container row">
       <div class="col-xs-4"><h1>The Book of Holding</h1></div>
       <!--      forms       -->
-      <div class="col-xs-8">
+      <div class="col-xs-7">
         <div id="sign-up" class="nav-forms collapse">
             <form class="form-group">
               <fieldset>
@@ -89,17 +83,17 @@
       </div>
     </section>
     <!-- end forms -->
-    <section class="col-sm-4">
+    <section class="container col-sm-4">
       <div id="diceroller" class="row">
       </div>
       <div id="roll-log" class="row">
       </div>
     </section>
-    <section  id="character-sheets" class="signed-in col-sm-8">
+    <section  id="character-sheets" class="container signed-in col-sm-7">
       <div>
         <ul class="nav nav-tabs" role="tablist">
         <li id="list-characters" role="presentation" class="active"><a href="#characters" aria-controls="character list" role="tab" data-toggle="tab">Character List</a></li>
-        <li role="presentation"><a href="#new-character" aria-controls="new character" role="tab" data-toggle="tab">New Character</a></li>
+        <li id="new-character-form" role="presentation"><a href="#new-character" aria-controls="new character" role="tab" data-toggle="tab">New Character</a></li>
         </ul>
         <div class="tab-content">
           <div id="characters" role="tabpanel" class="tab-pane fade in active">
@@ -117,41 +111,45 @@
               </table>
           </div>
           <div role="tabpanel" class="tab-pane fade" id="new-character">
-            <h3>Info</h3>
-            <form class="row form-inline">
-              <div class="form-group col-s-4">
+            <legend>Info</legend>
+            <form class="form-inline">
+              <div class="form-group">
                 <label class="sr-only" for="name">Name</label>
                 <input type="text" name="name" class="form-control" id="Name" placeholder="Name">
               </div>
-              <div class="form-group col-s-4">
+              <div class="form-group">
                 <label class="sr-only" for="race">Race</label>
                 <input type="text" name="race" class="form-control" id="race" placeholder="Race">
               </div>
-              <div class="form-group col-s-4">
+              <div class="form-group">
                 <label class="sr-only" for="gender">Gender</label>
                 <input type="text" name="gender" class="form-control" id="gender" placeholder="Gender">
               </div>
-              <div class="form-group col-s-4">
+              <div class="form-group">
                 <label class="sr-only" for="age">Age</label>
                 <input type="text" name="age" class="form-control" id="age" placeholder="Age">
               </div>
-              <div class="form-group col-s-4">
+              <div class="form-group">
                 <label class="sr-only" for="deity">Deity</label>
                 <input type="text" name="deity" class="form-control" id="deity" placeholder="Deity">
               </div>
               <button type="submit" class="btn btn-default">Save</button>
             </form>
-            <h3>Primary Stats</h3>
+            <form class="form-inline">
+              <legend>Stats</legend>
+              <div class="stats"></div>
+              <button type="submit" class="btn btn-default">Save</button>
+            </form>
+            <form class="form-inline">
+              <legend>Skills</legend>
+              <div class="skills"></div>
+              <button type="submit" class="btn btn-default">Save</button>
+            </form>
             <form>
-              <div class="form-group">
-                <label for="strength">STR</label>
-                <input type="number" name="str" class="form-control" id="str" placeholder="0">
-              </div>
-              <div class="form-group">
-                <label for="dexterity">DEX</label>
-                <input type="number" name="dex" class="form-control" id="dex" placeholder="0">
-              </div>
-
+              <legend>Spells</legend>
+              <select multiple class="spells form-control">
+              </select>
+              <button type="submit" class="btn btn-default">Save</button>
             </form>
           </div>
         </div>
