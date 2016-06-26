@@ -29,7 +29,7 @@ const signInSuccess = (data) => {
   $('.signed-out').hide();
   navFormCollapse();
   characters.onListCharacters();
-  characters.onNewCharacter();
+  characters.onNewCharacterForm();
 };
 
 const signInFail = () => {

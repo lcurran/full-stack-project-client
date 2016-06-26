@@ -13,6 +13,10 @@ const listCharacters = (characters) => {
     }
 };
 
+const clearCharacterList = () => {
+  $('#character-list').html('')
+};
+
 const skillsForm = (skills) => {
   console.log(skills);
   $('.skills').append(skillRow(skills));
@@ -38,6 +42,7 @@ const failure = (error) => {
 
 module.exports = {
   listCharacters,
+  clearCharacterList,
   update,
   failure,
   skillsForm,

@@ -44,10 +44,22 @@ const getSpells = () => {
   });
 };
 
+const newCharacter = (data) => {
+  return $.ajax({
+    url: app.host + '/characters/',
+    method: "POST",
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+    data
+  })
+};
+
 module.exports = {
   listCharacters,
   updateCharacter,
   getSkills,
   getStats,
   getSpells,
+  newCharacter,
 };
