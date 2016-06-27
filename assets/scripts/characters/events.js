@@ -46,15 +46,24 @@ const onSaveNewCharacter = (event) => {
   let data = form.characterData(event.target);
   console.log(data);
   api.newCharacter(data)
-  .done(ui.success)
+  .done(ui.newCharacterSuccess)
   .fail(ui.failure);
 };
 
+const onSaveNewStats = (event) => {
+  event.preventDefault();
+  let data = form.joinData(event.target);
+  console.log(data);
+  // api.newStats(data)
+  // .done(ui.newCharacterSuccess)
+  // .fail(ui.failure);
+};
 
 const addHandlers = () => {
   $('#update-character').on('submit', onUpdateCharacter);
   $('#new-info').on('submit', onSaveNewCharacter);
   $('#list-characters').on('click', onCharacterListRefresh);
+  $('#new-stats').on('submit', onSaveNewStats);
 };
 
 module.exports = {

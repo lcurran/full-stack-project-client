@@ -23,7 +23,19 @@ const characterData = (form) => {
     return data;
 };
 
+const joinData = (form) => {
+  let joinObj = {
+      "character_id": app.character.id
+    };
+    let formObj = getFormFields(form);
+    let data = {};
+    data['character'] = Object.assign(joinObj, formObj);
+    return data;
+};
+
+
 module.exports = {
   charactersData,
   characterData,
+  joinData,
 }
