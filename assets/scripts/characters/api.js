@@ -55,6 +55,39 @@ const newCharacter = (data) => {
   })
 };
 
+const newStat = (data) => {
+  return $.ajax({
+    url: app.host + '/character_stats/',
+    method: "POST",
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+    data
+  })
+};
+
+const newSkill = (data) => {
+  return $.ajax({
+    url: app.host + '/character_skills/',
+    method: "POST",
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+    data
+  })
+};
+
+const addSpell = (data) => {
+  return $.ajax({
+    url: app.host + '/character_spells/',
+    method: "POST",
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+    data
+  })
+};
+
 module.exports = {
   listCharacters,
   updateCharacter,
@@ -62,4 +95,7 @@ module.exports = {
   getStats,
   getSpells,
   newCharacter,
+  newStat,
+  newSkill,
+  addSpell,
 };

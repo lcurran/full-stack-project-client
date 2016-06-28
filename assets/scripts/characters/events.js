@@ -4,6 +4,7 @@ const form = require('./character-data');
 
 const api = require('./api');
 const ui = require('./ui');
+const formUi = require('./form-handlebars-ui');
 
 const onListCharacters = () => {
   event.preventDefault();
@@ -31,40 +32,29 @@ const onUpdateCharacter = (event) => {
 const onNewCharacterForm = () => {
   event.preventDefault();
   api.getStats()
-  .done(ui.statsForm)
+  .done(formUi.statsForm)
   .fail(ui.failure);
   api.getSkills()
-  .done(ui.skillsForm)
+  .done(formUi.skillsForm)
   .fail(ui.failure);
   api.getSpells()
-  .done(ui.spellsForm)
+  .done(formUi.spellsForm)
   .fail(ui.failure);
 };
 
-const onSaveNewCharacter = (event) => {
-  event.preventDefault();
-  let data = form.characterData(event.target);
-  console.log(data);
-  api.newCharacter(data)
-  .done(ui.newCharacterSuccess)
-  .fail(ui.failure);
-};
-
-const onSaveNewStats = (event) => {
-  event.preventDefault();
-  let data = form.joinData(event.target);
-  console.log(data);
-  // api.newStats(data)
-  // .done(ui.newCharacterSuccess)
-  // .fail(ui.failure);
-};
+const onDeleteCharacter = () => {
+  alert('delete');
+}
 
 const addHandlers = () => {
   $('#update-character').on('submit', onUpdateCharacter);
-  $('#new-info').on('submit', onSaveNewCharacter);
   $('#list-characters').on('click', onCharacterListRefresh);
-  $('#new-stats').on('submit', onSaveNewStats);
+  $('#options').find(".delete").on('click', onDeleteCharacter);
 };
+
+// $('#user_name').on('focusout', function() {
+//     $("#formEditUsername").trigger('submit');
+// });
 
 module.exports = {
   addHandlers,

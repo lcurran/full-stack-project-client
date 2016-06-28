@@ -103,6 +103,7 @@
           <ul class="nav nav-tabs" role="tablist">
           <li id="list-characters" role="presentation" class="active"><a href="#characters" aria-controls="character list" role="tab" data-toggle="tab">Character List</a></li>
           <li id="new-character-form" role="presentation"><a href="#new-character" aria-controls="new character" role="tab" data-toggle="tab">New Character</a></li>
+          <li id="view-character-tab" class="view-character-tab" role="presentation"><a href="#view-character" aria-controls="viewCharacter" role="tab" data-toggle="tab"></a></li>
           </ul>
           <div class="tab-content">
             <div id="characters" role="tabpanel" class="tab-pane fade in active">
@@ -153,29 +154,32 @@
               <div class="row">
                 <legend class="well well-sm" data-toggle="collapse" data-target="#collapseAttr" aria-expanded="false" aria-controls="collapseAttr">Assign Attributes</legend>
                   <div class="collapse" id="collapseAttr">
-                    <form id="new-stats" class="form-horizontal col-md-6">
+                    <article id="new-stats" class="col-md-6">
                       <legend>Stats</legend>
                       <div class="stats"></div>
-                    </form>
-                    <form id="new-skills" class="form-horizontal col-md-6">
+                    </article>
+                    <article id="new-skills" class="col-md-6">
                       <legend>Skills</legend>
                       <div class="skills"></div>
-                    </form>
+                    </article>
                   </div>
               </div>
               <div class="row">
                 <legend class="well well-sm" data-toggle="collapse" data-target="#collapseSpell" aria-expanded="false" aria-controls="collapseSpell">Pick Spells</legend>
                   <div class="collapse" id="collapseSpell">
-                  <form>
-                    <select id="new-spells" class="form-control spells">
+                  <form id="add-spell">
+                    <select name="spell_id" class="form-control spells">
                     </select>
-                    <p><button type="submit" class="form-button btn btn-default">Add Spell</button></p>
+                    <button type="submit" class="form-button btn btn-default">Add Spell</button>
                   </form>
                   <h5>Spell list:</h5>
                   <div id="spell-list">
                   </div>
                 </div>
               </div>
+            </div>
+            <div id="view-character" role="tabpanel" class="tab-pane fade">
+
             </div>
           </div>
         </div>

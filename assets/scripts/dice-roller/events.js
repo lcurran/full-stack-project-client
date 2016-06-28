@@ -38,7 +38,7 @@ const rollD20 = () => {
   console.log(roll);
   ui.displayRoll(roll);
 };
-// 
+//
 // const cheatCode = (event) => {
 //   event.preventDefault();
 //   let code = getFormFields(event.target);
@@ -52,12 +52,16 @@ const rollD20 = () => {
 //   }
 // };
 
+const addHandlers = () => {
+  $('#roll-four').on('click', rollD4);
+  $('#roll-six').on('click', rollD6);
+  $('#roll-eight').on('click', rollD8);
+  $('#roll-ten').on('click', rollD10);
+  $('#roll-twelve').on('click', rollD12);
+  $('#roll-twenty').on('click', rollD20);
+  // $('#cheat-code').on('submit', rollerEvents.cheatCode);
+};
+
 module.exports = {
-  rollD4,
-  rollD6,
-  rollD8,
-  rollD10,
-  rollD12,
-  rollD20,
-  // cheatCode,
+  addHandlers,
 };
