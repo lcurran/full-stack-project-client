@@ -1,14 +1,14 @@
-<tr id={{this.id}}>
+<tr>
   <td>{{name}}</td>
   <td>{{race}}</td>
   <td>{{age}}</td>
   <td>{{gender}}</td>
   <td>{{alignment}}</td>
   <td>
-    <div id="options" class="btn-group btn-group-xs" role="group" aria-label="options">
-      <button type="button" class="view btn btn-default">View</button>
-      <button type="button" class="edit btn btn-default">Edit</button>
-      <button type="button" class="delete btn btn-default">Delete</button>
+    <div class="options btn-group btn-group-xs" role="group" aria-label="options">
+      <button name={{this.id}} type="button" class="view btn btn-default">View</button>
+      <button name={{this.id}} type="button" class="edit btn btn-default">Edit</button>
+      <button name={{this.id}} type="button" class="delete btn btn-default">Delete</button>
     </div>
   </td>
 </tr>

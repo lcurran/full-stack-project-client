@@ -43,6 +43,7 @@ const signOutSuccess = () => {
   app.user = null;
   $('.signed-out').show();
   $('.signed-in').hide();
+  $('#character-list').html('');
 };
 
 const changePasswordSuccess = () => {

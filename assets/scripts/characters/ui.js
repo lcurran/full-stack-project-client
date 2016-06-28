@@ -1,15 +1,9 @@
 'use strict';
 
 const app = require('../app.js');
-const characterListingTemplate = require('../templates/character-listing.handlebars');
-
-
-const listCharacters = (characters) => {
-  // console.log(characters);
-  if (characters) {
-      $('#character-list').append(characterListingTemplate(characters));
-    }
-};
+const characterInfoTemplate = require('../templates/character-info-view.handlebars');
+const characterStatTemplate = require('../templates/character-stat-view.handlebars');
+const characterSkillTemplate = require('../templates/character-skill-view.handlebars');
 
 const clearCharacterList = () => {
   $('#character-list').html('')
@@ -20,8 +14,9 @@ const newCharacterSuccess = (data) => {
   app.character = data.character
 };
 
-const update = () => {
-  alert('character updated');
+const viewCharacterSuccess = (data) => {
+  console.log(data.character);
+  $('#view-character').append(characterInfoTemplate(data.character));
 };
 
 const failure = (error) => {
@@ -33,10 +28,9 @@ const success = (data) => {
 };
 
 module.exports = {
-  listCharacters,
   clearCharacterList,
-  update,
   failure,
   success,
   newCharacterSuccess,
+  viewCharacterSuccess,
 };

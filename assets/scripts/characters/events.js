@@ -5,11 +5,12 @@ const form = require('./character-data');
 const api = require('./api');
 const ui = require('./ui');
 const formUi = require('./form-handlebars-ui');
+const charUi = require('./character-list-handlebars-ui')
 
 const onListCharacters = () => {
   event.preventDefault();
   api.listCharacters()
-  .done(ui.listCharacters)
+  .done(charUi.listCharacters)
   .fail(ui.failure);
 };
 
@@ -42,14 +43,10 @@ const onNewCharacterForm = () => {
   .fail(ui.failure);
 };
 
-const onDeleteCharacter = () => {
-  alert('delete');
-}
 
 const addHandlers = () => {
   $('#update-character').on('submit', onUpdateCharacter);
   $('#list-characters').on('click', onCharacterListRefresh);
-  $('#options').find(".delete").on('click', onDeleteCharacter);
 };
 
 // $('#user_name').on('focusout', function() {

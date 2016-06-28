@@ -88,6 +88,23 @@ const addSpell = (data) => {
   })
 };
 
+const deleteCharacter = (id) => {
+  return $.ajax({
+    url: app.host + '/characters/' + id,
+    method: "DELETE",
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+  });
+};
+
+const viewCharacter = (id) => {
+  return $.ajax({
+    url: app.host + '/characters/' + id,
+    method: "GET"
+  });
+};
+
 module.exports = {
   listCharacters,
   updateCharacter,
@@ -98,4 +115,6 @@ module.exports = {
   newStat,
   newSkill,
   addSpell,
+  deleteCharacter,
+  viewCharacter,
 };

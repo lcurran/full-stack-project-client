@@ -1,0 +1,29 @@
+
+<table class="table table-resposive">
+  <thead>
+    <th>Name</th>
+    <th>Race</th>
+    <th>Age</th>
+    <th>Gender</th>
+    <th>Alignment</th>
+    <th>Deity</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{name}}</td>
+      <td>{{race}}</td>
+      <td>{{age}}</td>
+      <td>{{gender}}</td>
+      <td>{{alignment}}</td>
+      <td>{{deity}}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="row">
+  <div class="col-xs-6">
+  {{>character-stat-view}}
+  </div>
+  <div class="col-xs-6">
+    {{>character-skill-view}}
+  </div>
+</div>
