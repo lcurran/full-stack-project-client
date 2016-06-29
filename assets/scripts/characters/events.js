@@ -1,7 +1,4 @@
 'use strict';
-const getFormFields = require('../../../lib/get-form-fields');
-const form = require('./character-data');
-
 const api = require('./api');
 const ui = require('./ui');
 const formUi = require('./form-handlebars-ui');
@@ -11,22 +8,6 @@ const onListCharacters = () => {
   event.preventDefault();
   api.listCharacters()
   .done(charUi.listCharacters)
-  .fail(ui.failure);
-};
-
-const onCharacterListRefresh = () => {
-  event.preventDefault();
-  ui.clearCharacterList();
-  api.listCharacters()
-  .done(ui.listCharacters)
-  .fail(ui.failure);
-};
-
-const onUpdateCharacter = (event) => {
-  event.preventDefault();
-  let data = form.charactersData(event.target);
-  api.updateCharacter(data)
-  .done(ui.update)
   .fail(ui.failure);
 };
 
@@ -45,13 +26,7 @@ const onNewCharacterForm = () => {
 
 
 const addHandlers = () => {
-  $('#update-character').on('submit', onUpdateCharacter);
-  $('#list-characters').on('click', onCharacterListRefresh);
 };
-
-// $('#user_name').on('focusout', function() {
-//     $("#formEditUsername").trigger('submit');
-// });
 
 module.exports = {
   addHandlers,

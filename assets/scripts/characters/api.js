@@ -63,7 +63,7 @@ const newStat = (data) => {
       Authorization: 'Token token=' + app.user.token,
     },
     data
-  })
+  });
 };
 
 const newSkill = (data) => {
@@ -74,7 +74,7 @@ const newSkill = (data) => {
       Authorization: 'Token token=' + app.user.token,
     },
     data
-  })
+  });
 };
 
 const addSpell = (data) => {
@@ -85,7 +85,7 @@ const addSpell = (data) => {
       Authorization: 'Token token=' + app.user.token,
     },
     data
-  })
+  });
 };
 
 const deleteCharacter = (id) => {
@@ -105,6 +105,17 @@ const viewCharacter = (id) => {
   });
 };
 
+const editCharacter = (data) => {
+  return $.ajax({
+    url: app.host + '/characters/' + app.character.id,
+    method: "PATCH",
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+    data
+  });
+};
+
 module.exports = {
   listCharacters,
   updateCharacter,
@@ -117,4 +128,5 @@ module.exports = {
   addSpell,
   deleteCharacter,
   viewCharacter,
+  editCharacter,
 };

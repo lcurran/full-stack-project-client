@@ -104,6 +104,7 @@
           <li id="list-characters" role="presentation" class="active"><a href="#characters" aria-controls="character list" role="tab" data-toggle="tab">Character List</a></li>
           <li id="new-character-form" role="presentation"><a href="#new-character" aria-controls="new character" role="tab" data-toggle="tab">New Character</a></li>
           <li id="view-character-tab" class="view-character-tab" role="presentation"><a href="#view-character" aria-controls="viewCharacter" role="tab" data-toggle="tab">View Character</a></li>
+          <li id="edit-character-tab" class="edit-character-tab" role="presentation"><a href="#edit-character" aria-controls="editCharacter" role="tab" data-toggle="tab">Edit Character</a></li>
           </ul>
           <div class="tab-content">
             <div id="characters" role="tabpanel" class="tab-pane fade in active">
@@ -126,27 +127,27 @@
                 <form id="new-info" class="form-inline">
                   <div class="form-group">
                     <label class="sr-only" for="name">Name</label>
-                    <input type="text" name="name" class="form-control" id="Name" placeholder="Name">
+                    <input type="text" name="name" class="form-control" placeholder="Name">
                   </div>
                   <div class="form-group">
                     <label class="sr-only" for="race">Race</label>
-                    <input type="text" name="race" class="form-control" id="race" placeholder="Race">
+                    <input type="text" name="race" class="form-control" placeholder="Race">
                   </div>
                   <div class="form-group">
                     <label class="sr-only" for="gender">Gender</label>
-                    <input type="text" name="gender" class="form-control" id="gender" placeholder="Gender">
+                    <input type="text" name="gender" class="form-control" placeholder="Gender">
                   </div>
                   <div class="form-group">
                     <label class="sr-only" for="age">Age</label>
-                    <input type="text" name="age" class="form-control" id="age" placeholder="Age">
+                    <input type="text" name="age" class="form-control" placeholder="Age">
                   </div>
                   <div class="form-group">
                     <label class="sr-only" for="alignment">Alignment</label>
-                    <input type="text" name="alignment" class="form-control" id="alignment" placeholder="Alignment">
+                    <input type="text" name="alignment" class="form-control" placeholder="Alignment">
                   </div>
                   <div class="form-group">
                     <label class="sr-only" for="deity">Deity</label>
-                    <input type="text" name="deity" class="form-control" id="deity" placeholder="Deity">
+                    <input type="text" name="deity" class="form-control" placeholder="Deity">
                   </div>
                   <button type="submit" class="form-button btn btn-default">Create character</button>
                 </form>
@@ -179,6 +180,14 @@
               </div>
             </div>
             <div id="view-character" role="tabpanel" class="tab-pane fade">
+            </div>
+            <div id="edit-character" role="tabpanel" class="tab-pane fade">
+              <div class="row">
+                <legend class="well well-sm">Info</legend>
+                <form id="edit-info">
+                  <button type="submit" class="form-button btn btn-default">Edit character</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
