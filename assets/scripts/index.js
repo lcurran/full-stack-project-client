@@ -18,6 +18,7 @@ $(() => {
   rollerEvents.addHandlers();
   $('.signed-in').hide();
   $('.view-character-tab').hide();
+  $('.edit-character-tab').hide();
   $('#sign-in-nav').on('click', navFormCollapse);
   $('#sign-up-nav').on('click', navFormCollapse);
   $('#change-password-nav').on('click', navFormCollapse);

@@ -25,7 +25,8 @@ const loadInfo = (data) => {
 };
 
 const loadEditCharacter = (data) => {
-  app.character = data.character
+  app.character = data.character;
+  $('#edit-character-tab').show();
   loadInfo(data);
   $("#edit-info").on('submit')
 };
