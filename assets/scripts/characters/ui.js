@@ -3,14 +3,20 @@
 const app = require('../app.js');
 const characterInfoTemplate = require('../templates/character-info-view.handlebars');
 const characterEditTemplate = require('../templates/character-edit-info.handlebars');
+const characterListingTemplate = require('../templates/character-listing.handlebars');
+const skillRow = require('../templates/skills-form.handlebars');
+const statRow = require('../templates/stats-form.handlebars');
+const spellForm = require('../templates/spells-form.handlebars');
 
-const clearCharacterList = () => {
-  $('#character-list').html('')
+const listCharacters = (characters) => {
+  if (characters) {
+      $('#character-list').append(characterListingTemplate(characters));
+
+    };
 };
 
 const newCharacterSuccess = (data) => {
-  // console.log(data)
-  app.character = data.character
+  app.character = data.character;
 };
 
 const viewCharacterSuccess = (data) => {
@@ -18,17 +24,22 @@ const viewCharacterSuccess = (data) => {
   $('#view-character').append(characterInfoTemplate(data.character));
 };
 
-const loadInfo = (data) => {
-  console.log(data);
-  console.log(data.character.name);
+const loadEditCharacter = (data) => {
+  app.character = data.character;
+  // $('#edit-character-tab').show();
   $('#edit-info').prepend(characterEditTemplate(data.character));
 };
 
-const loadEditCharacter = (data) => {
-  app.character = data.character;
-  $('#edit-character-tab').show();
-  loadInfo(data);
-  $("#edit-info").on('submit')
+const statsForm = (stats) => {
+  $('.stats').append(statRow(stats));
+};
+
+const skillsForm = (skills) => {
+  $('.skills').append(skillRow(skills));
+};
+
+const spellsForm = (spells) => {
+  $('.spells').append(spellForm(spells));
 };
 
 const failure = (error) => {
@@ -40,10 +51,13 @@ const success = (data) => {
 };
 
 module.exports = {
-  clearCharacterList,
   failure,
   success,
-  newCharacterSuccess,
   viewCharacterSuccess,
   loadEditCharacter,
+  listCharacters,
+  statsForm,
+  skillsForm,
+  spellsForm,
+  newCharacterSuccess,
 };

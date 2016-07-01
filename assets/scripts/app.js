@@ -1,7 +1,7 @@
 'use strict';
 
 const app = {
-  host: 'http://localhost:3000',
+  host: 'https://book-of-holding.herokuapp.com/',
 };
 
 module.exports = app;
