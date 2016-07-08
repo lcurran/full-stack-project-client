@@ -31,7 +31,6 @@ webpackJsonp([0],[
 
 	var authEvents = __webpack_require__(3);
 	var characterEvents = __webpack_require__(8);
-	var ui = __webpack_require__(7);
 	var rollerEvents = __webpack_require__(41);
 
 	var navFormCollapse = function navFormCollapse() {
@@ -232,7 +231,7 @@ webpackJsonp([0],[
 	'use strict';
 
 	var app = {
-	  host: 'https://book-of-holding.herokuapp.com/'
+	  host: 'http://localhost:3000'
 	};
 
 	module.exports = app;
@@ -330,6 +329,7 @@ webpackJsonp([0],[
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
+	var app = __webpack_require__(6);
 	var api = __webpack_require__(9);
 	var ui = __webpack_require__(10);
 	var getFormFields = __webpack_require__(4);
@@ -348,6 +348,7 @@ webpackJsonp([0],[
 
 	var onViewCharacter = function onViewCharacter(event) {
 	  event.preventDefault();
+	  $('#view-character').html('');
 	  var id = event.target.name;
 	  api.viewCharacter(id).done(ui.viewCharacterSuccess).fail(ui.failure);
 	};
@@ -360,6 +361,7 @@ webpackJsonp([0],[
 
 	var onEditCharacter = function onEditCharacter(event) {
 	  event.preventDefault();
+	  $('#edit-form').html('');
 	  var id = event.target.name;
 	  api.viewCharacter(id).done(ui.loadEditCharacter, editHandler).fail(ui.failure);
 	};
@@ -380,24 +382,38 @@ webpackJsonp([0],[
 	var onSaveNewCharacter = function onSaveNewCharacter(event) {
 	  event.preventDefault();
 	  var data = form.characterData(event.target);
-	  console.log(data);
-	  api.newCharacter(data).done(ui.newCharacterSuccess(data), characterListRefresh).fail(ui.failure);
+	  api.newCharacter(data).done(ui.newCharacterSuccess, characterListRefresh).fail(ui.failure);
 	};
 
 	var onStatSave = function onStatSave(event) {
 	  var data = form.statData(event);
-	  api.newStat(data).done(ui.success).fail(ui.failure);
+	  var statArray = app.character.stats;
+	  var statId = data.character.stat_id;
+
+	  if (statArray.includes(+statId)) {
+	    api.updateStat(data).done(ui.success).fail(ui.failure);
+	  } else if (data.character.stat_value) {
+	    api.newStat(data).done(ui.statSave).fail(ui.failure);
+	  }
 	};
 
 	var onSkillSave = function onSkillSave(event) {
 	  var data = form.skillData(event);
-	  api.newSkill(data).done(ui.success).fail(ui.failure);
+	  // let id = data
+	  var skillArray = app.character.skills;
+	  var skillId = data.character.skill_id;
+
+	  if (skillArray.includes(+skillId)) {
+	    api.updateSkill(data).done(ui.success).fail(ui.failure);
+	  } else if (data.character.skill_value) {
+	    api.newSkill(data).done(ui.skillSave).fail(ui.failure);
+	  }
 	};
 
 	var onAddSpell = function onAddSpell(event) {
 	  event.preventDefault();
 	  var data = form.spellData(event.target);
-	  api.addSpell(data).done(ui.success).fail(ui.failure);
+	  api.addSpell(data).done(ui.spellSaveSuccess).fail(ui.failure);
 	};
 
 	//page ready handlers
@@ -421,9 +437,7 @@ webpackJsonp([0],[
 
 	// form handlers
 	var skillHandler = function skillHandler() {
-	  for (var i = 1, max = 35; i <= max; i++) {
-	    $('#' + i).on('blur', onSkillSave);
-	  }
+	  $('.skillInput').blur(onSkillSave);
 	};
 
 	var spellHandler = function spellHandler() {
@@ -431,20 +445,7 @@ webpackJsonp([0],[
 	};
 
 	var statHandler = function statHandler() {
-	  $('#STR').on('blur', onStatSave);
-	  $('#DEX').on('blur', onStatSave);
-	  $('#CON').on('blur', onStatSave);
-	  $('#INT').on('blur', onStatSave);
-	  $('#WIS').on('blur', onStatSave);
-	  $('#CHA').on('blur', onStatSave);
-	  $('#AC').on('blur', onStatSave);
-	  $('#HP').on('blur', onStatSave);
-	  $('#HP').on('blur', onStatSave);
-	  $('#speed').on('blur', onStatSave);
-	  $('#initiative').on('blur', onStatSave);
-	  $('#size').on('blur', onStatSave);
-	  $('#height').on('blur', onStatSave);
-	  $('#weight').on('blur', onStatSave);
+	  $('.statInput').blur(onStatSave);
 	};
 
 	module.exports = {
@@ -530,10 +531,32 @@ webpackJsonp([0],[
 	  });
 	};
 
+	var updateStat = function updateStat(data) {
+	  return $.ajax({
+	    url: app.host + '/character_stats/' + app.character.id,
+	    method: "PATCH",
+	    headers: {
+	      Authorization: 'Token token=' + app.user.token
+	    },
+	    data: data
+	  });
+	};
+
 	var newSkill = function newSkill(data) {
 	  return $.ajax({
 	    url: app.host + '/character_skills/',
 	    method: "POST",
+	    headers: {
+	      Authorization: 'Token token=' + app.user.token
+	    },
+	    data: data
+	  });
+	};
+
+	var updateSkill = function updateSkill(data) {
+	  return $.ajax({
+	    url: app.host + '/character_skills/' + app.character.id,
+	    method: "PATCH",
 	    headers: {
 	      Authorization: 'Token token=' + app.user.token
 	    },
@@ -592,7 +615,9 @@ webpackJsonp([0],[
 	  addSpell: addSpell,
 	  deleteCharacter: deleteCharacter,
 	  viewCharacter: viewCharacter,
-	  editCharacter: editCharacter
+	  editCharacter: editCharacter,
+	  updateStat: updateStat,
+	  updateSkill: updateSkill
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
@@ -613,22 +638,29 @@ webpackJsonp([0],[
 	var listCharacters = function listCharacters(characters) {
 	  if (characters) {
 	    $('#character-list').append(characterListingTemplate(characters));
-	  };
+	  }
 	};
 
 	var newCharacterSuccess = function newCharacterSuccess(data) {
 	  app.character = data.character;
+	  console.log(data.character);
+	  $('#collapseAttr').collapse('show');
+	  $('#collapseSpell').collapse('show');
 	};
 
 	var viewCharacterSuccess = function viewCharacterSuccess(data) {
-	  console.log(data.character);
 	  $('#view-character').append(characterInfoTemplate(data.character));
 	};
 
 	var loadEditCharacter = function loadEditCharacter(data) {
 	  app.character = data.character;
-	  // $('#edit-character-tab').show();
 	  $('#edit-info').prepend(characterEditTemplate(data.character));
+	  $('#name').val(data.character.name);
+	  $('#race').val(data.character.race);
+	  $('#gender').val(data.character.gender);
+	  $('#age').val(data.character.age);
+	  $('#alignment').val(data.character.alignment);
+	  $('#deity').val(data.character.deity);
 	};
 
 	var statsForm = function statsForm(stats) {
@@ -643,12 +675,26 @@ webpackJsonp([0],[
 	  $('.spells').append(spellForm(spells));
 	};
 
+	var spellSaveSuccess = function spellSaveSuccess(data) {
+	  $('#spell-list').append('<p>' + data.character_spell.spell.name + '</p>');
+	};
+
+	var statSave = function statSave(data) {
+	  app.character.stats.push(data.character_stat.stat_id);
+	};
+
+	var skillSave = function skillSave(data) {
+	  app.character.skills.push(data.character_skill.skill_id);
+	  console.log(data);
+	  // console.log(app.character);
+	};
+
 	var failure = function failure(error) {
-	  console.error(error);
+	  // console.error(error);
 	};
 
 	var success = function success(data) {
-	  console.log(data);
+	  // console.log(data);
 	};
 
 	module.exports = {
@@ -660,7 +706,10 @@ webpackJsonp([0],[
 	  statsForm: statsForm,
 	  skillsForm: skillsForm,
 	  spellsForm: spellsForm,
-	  newCharacterSuccess: newCharacterSuccess
+	  newCharacterSuccess: newCharacterSuccess,
+	  spellSaveSuccess: spellSaveSuccess,
+	  statSave: statSave,
+	  skillSave: skillSave
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
@@ -1963,7 +2012,7 @@ webpackJsonp([0],[
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-	  return "<div class=\"form-group\">\n  <label for=\"name\">"
+	  return "<input type=\"text\" name=\"character[name]\" id=\"name\" placeholder=\"Name\">\n<input type=\"text\" name=\"character[race]\" id=\"race\" placeholder=\"Race\">\n<input type=\"text\" name=\"character[gender]\" id=\"gender\" placeholder=\"Gender\">\n<input type=\"text\" name=\"character[age]\" id=\"age\" placeholder=\"Age\">\n<input type=\"text\" name=\"character[alignment]\" id=\"alignment\" placeholder=\"Alignment\">\n<input type=\"text\" name=\"character[deity]\" id=\"deity\" placeholder=\"Deity\">\n\n\n\n\n<!-- <div class=\"form-group\">\n  <label for=\"name\">"
 	    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
 	    + "</label>\n  <input type=\"text\" name=\"character[name]\" class=\"form-control\" id=\"name\" placeholder=\"Name\">\n</div>\n<div class=\"form-group\">\n  <label for=\"race\">"
 	    + alias4(((helper = (helper = helpers.race || (depth0 != null ? depth0.race : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"race","hash":{},"data":data}) : helper)))
@@ -1975,7 +2024,7 @@ webpackJsonp([0],[
 	    + alias4(((helper = (helper = helpers.alignment || (depth0 != null ? depth0.alignment : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"alignment","hash":{},"data":data}) : helper)))
 	    + "</label>\n  <input type=\"text\" name=\"character[alignment]\" class=\"form-control\" id=\"alignment\" placeholder=\"Alignment\">\n</div>\n<div class=\"form-group\">\n  <label for=\"deity\">"
 	    + alias4(((helper = (helper = helpers.deity || (depth0 != null ? depth0.deity : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"deity","hash":{},"data":data}) : helper)))
-	    + "</label>\n  <input type=\"text\" name=\"character[deity]\" class=\"form-control\" id=\"deity\" placeholder=\"Deity\">\n</div>\n";
+	    + "</label>\n  <input type=\"text\" name=\"character[deity]\" class=\"form-control\" id=\"deity\" placeholder=\"Deity\">\n</div> -->\n";
 	},"useData":true});
 
 /***/ },
@@ -2013,6 +2062,8 @@ webpackJsonp([0],[
 	    + alias4(((helper = (helper = helpers.gender || (depth0 != null ? depth0.gender : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"gender","hash":{},"data":data}) : helper)))
 	    + "</td>\n  <td>"
 	    + alias4(((helper = (helper = helpers.alignment || (depth0 != null ? depth0.alignment : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"alignment","hash":{},"data":data}) : helper)))
+	    + "</td>\n  <td>"
+	    + alias4(((helper = (helper = helpers.deity || (depth0 != null ? depth0.deity : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"deity","hash":{},"data":data}) : helper)))
 	    + "</td>\n  <td>\n    <div class=\"options btn-group btn-group-xs\" role=\"group\" aria-label=\"options\">\n      <button name="
 	    + alias4(alias5((depth0 != null ? depth0.id : depth0), depth0))
 	    + " type=\"button\" class=\"view btn btn-default\">View</button>\n      <button name="
@@ -2029,15 +2080,17 @@ webpackJsonp([0],[
 	var Handlebars = __webpack_require__(12);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
-	    var helper, alias1=container.lambda, alias2=container.escapeExpression;
+	    var helper, alias1=container.lambda, alias2=container.escapeExpression, alias3=depth0 != null ? depth0 : {}, alias4=helpers.helperMissing, alias5="function";
 
 	  return "  <div class=\"form-group\">\n    <label class=\"col-sm-8 control-label\" for="
 	    + alias2(alias1((depth0 != null ? depth0.id : depth0), depth0))
 	    + ">"
-	    + alias2(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"name","hash":{},"data":data}) : helper)))
+	    + alias2(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias4),(typeof helper === alias5 ? helper.call(alias3,{"name":"name","hash":{},"data":data}) : helper)))
 	    + "</label>\n    <div class=\"col-sm-4\">\n      <input type=\"number\" id="
+	    + alias2(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias4),(typeof helper === alias5 ? helper.call(alias3,{"name":"name","hash":{},"data":data}) : helper)))
+	    + " name="
 	    + alias2(alias1((depth0 != null ? depth0.id : depth0), depth0))
-	    + " class=\"col-s-2 form-control\" placeholder=\"0\">\n    </div>\n  </div>\n";
+	    + " class=\"skillInput col-s-2 form-control\" placeholder=\"0\">\n    </div>\n  </div>\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper, options, buffer = "";
 
@@ -2064,7 +2117,7 @@ webpackJsonp([0],[
 	    + alias2(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias4),(typeof helper === alias5 ? helper.call(alias3,{"name":"name","hash":{},"data":data}) : helper)))
 	    + " name="
 	    + alias2(alias1((depth0 != null ? depth0.id : depth0), depth0))
-	    + " class=\"col-s-2 form-control\" placeholder=\"0\">\n    </div>\n  </div>\n";
+	    + " class=\"statInput col-s-2 form-control\" placeholder=\"0\">\n    </div>\n  </div>\n";
 	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper, options, buffer = "";
 
@@ -2127,22 +2180,24 @@ webpackJsonp([0],[
 	};
 
 	var statData = function statData(event) {
-	  var character = {};
-	  character["character_id"] = app.character.id;
-	  character["stat_value"] = event.target.value;
-	  character["stat_id"] = event.target.name;
+	  var obj = {
+	    "character_id": app.character.id,
+	    "stat_value": event.target.value,
+	    "stat_id": event.target.name
+	  };
 	  var data = {};
-	  data['character'] = character;
+	  data['character'] = obj;
 	  return data;
 	};
 
 	var skillData = function skillData(event) {
-	  var character = {};
-	  character["character_id"] = app.character.id;
-	  character["skill_value"] = event.target.value;
-	  character["skill_id"] = event.target.id;
+	  var obj = {
+	    "character_id": app.character.id,
+	    "skill_value": event.target.value,
+	    "skill_id": event.target.name
+	  };
 	  var data = {};
-	  data['character'] = character;
+	  data['character'] = obj;
 	  return data;
 	};
 
@@ -2175,37 +2230,31 @@ webpackJsonp([0],[
 
 	var rollD4 = function rollD4() {
 	  var roll = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-	  console.log(roll);
 	  ui.displayRoll(roll);
 	};
 
 	var rollD6 = function rollD6() {
 	  var roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-	  console.log(roll);
 	  ui.displayRoll(roll);
 	};
 
 	var rollD8 = function rollD8() {
 	  var roll = Math.floor(Math.random() * (8 - 1 + 1)) + 1;
-	  console.log(roll);
 	  ui.displayRoll(roll);
 	};
 
 	var rollD10 = function rollD10() {
 	  var roll = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
-	  console.log(roll);
 	  ui.displayRoll(roll);
 	};
 
 	var rollD12 = function rollD12() {
 	  var roll = Math.floor(Math.random() * (12 - 1 + 1)) + 1;
-	  console.log(roll);
 	  ui.displayRoll(roll);
 	};
 
 	var rollD20 = function rollD20() {
 	  var roll = Math.floor(Math.random() * (20 - 1 + 1)) + 1;
-	  console.log(roll);
 	  ui.displayRoll(roll);
 	};
 	//
