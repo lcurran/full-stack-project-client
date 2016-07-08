@@ -1,4 +1,5 @@
 'use strict';
+const app = require('../app.js');
 const api = require('./api');
 const ui = require('./ui');
 const getFormFields = require('../../../lib/get-form-fields');
@@ -21,6 +22,7 @@ const onListCharacters = () => {
 
 const onViewCharacter = (event) => {
   event.preventDefault();
+  $('#view-character').html('');
   let id = event.target.name;
   api.viewCharacter(id)
   .done(ui.viewCharacterSuccess)
@@ -37,6 +39,7 @@ const onDeleteCharacter = (event) => {
 
 const onEditCharacter = (event) => {
   event.preventDefault();
+  $('#edit-form').html('');
   let id = event.target.name;
   api.viewCharacter(id)
   .done(ui.loadEditCharacter, editHandler)
@@ -67,31 +70,49 @@ const onNewCharacterForm = () => {
 const onSaveNewCharacter = (event) => {
   event.preventDefault();
   let data = form.characterData(event.target);
-  console.log(data);
   api.newCharacter(data)
-  .done(ui.newCharacterSuccess(data), characterListRefresh)
+  .done(ui.newCharacterSuccess, characterListRefresh)
   .fail(ui.failure);
 };
 
 const onStatSave = (event) => {
   let data = form.statData(event);
-  api.newStat(data)
-  .done(ui.success)
-  .fail(ui.failure);
+  let statArray = app.character.stats;
+  let statId = data.character.stat_id;
+
+  if (statArray.includes(+statId)) {
+    api.updateStat(data)
+    .done(ui.success)
+    .fail(ui.failure);
+  } else if (data.character.stat_value) {
+    api.newStat(data)
+    .done(ui.statSave)
+    .fail(ui.failure);
+  }
 };
 
 const onSkillSave = (event) => {
   let data = form.skillData(event);
-  api.newSkill(data)
-  .done(ui.success)
-  .fail(ui.failure);
+  // let id = data
+  let skillArray = app.character.skills;
+  let skillId = data.character.skill_id;
+
+  if (skillArray.includes(+skillId)) {
+    api.updateSkill(data)
+    .done(ui.success)
+    .fail(ui.failure);
+  } else if (data.character.skill_value) {
+    api.newSkill(data)
+    .done(ui.skillSave)
+    .fail(ui.failure);
+  }
 };
 
 const onAddSpell = (event) => {
   event.preventDefault();
   let data = form.spellData(event.target);
   api.addSpell(data)
-  .done(ui.success)
+  .done(ui.spellSaveSuccess)
   .fail(ui.failure);
 };
 
@@ -116,9 +137,7 @@ const editHandler = () => {
 
 // form handlers
 const skillHandler = () => {
-  for (let i = 1, max = 35; i <= max; i++) {
-    $('#' + i).on('blur', onSkillSave);
-  }
+  $('.skillInput').blur(onSkillSave);
 };
 
 const spellHandler = () => {
@@ -126,20 +145,7 @@ const spellHandler = () => {
 };
 
 const statHandler = () => {
-  $('#STR').on('blur', onStatSave);
-  $('#DEX').on('blur', onStatSave);
-  $('#CON').on('blur', onStatSave);
-  $('#INT').on('blur', onStatSave);
-  $('#WIS').on('blur', onStatSave);
-  $('#CHA').on('blur', onStatSave);
-  $('#AC').on('blur', onStatSave);
-  $('#HP').on('blur', onStatSave);
-  $('#HP').on('blur', onStatSave);
-  $('#speed').on('blur', onStatSave);
-  $('#initiative').on('blur', onStatSave);
-  $('#size').on('blur', onStatSave);
-  $('#height').on('blur', onStatSave);
-  $('#weight').on('blur', onStatSave);
+  $('.statInput').blur(onStatSave);
 };
 
 module.exports = {

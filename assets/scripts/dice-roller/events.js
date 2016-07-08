@@ -5,37 +5,31 @@ const getFormFields = require('../../../lib/get-form-fields');
 
 const rollD4 = () => {
   let roll = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
-  console.log(roll);
   ui.displayRoll(roll);
 };
 
 const rollD6 = () => {
   let roll = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
-  console.log(roll);
   ui.displayRoll(roll);
 };
 
 const rollD8 = () => {
   let roll = Math.floor(Math.random() * (8 - 1 + 1)) + 1;
-  console.log(roll);
   ui.displayRoll(roll);
 };
 
 const rollD10 = () => {
   let roll = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
-  console.log(roll);
   ui.displayRoll(roll);
 };
 
 const rollD12 = () => {
   let roll = Math.floor(Math.random() * (12 - 1 + 1)) + 1;
-  console.log(roll);
   ui.displayRoll(roll);
 };
 
 const rollD20 = () => {
   let roll = Math.floor(Math.random() * (20 - 1 + 1)) + 1;
-  console.log(roll);
   ui.displayRoll(roll);
 };
 //

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Example</title>
+    <title>Book of Holding</title>
     <script src="vendor.bundle.js" type="text/javascript" charset="utf-8" defer></script>
     <script src="bundle.js" type="text/javascript" charset="utf-8" defer></script>
   </head>
@@ -115,6 +115,7 @@
                       <th>Age</th>
                       <th>Gender</th>
                       <th>Alignment</th>
+                      <th>Deity</th>
                       <th>Options</th>
                   </thead>
                   <tbody id="character-list">
@@ -153,7 +154,7 @@
                 </form>
               </div>
               <div class="row">
-                <legend class="well well-sm" data-toggle="collapse" data-target="#collapseAttr" aria-expanded="false" aria-controls="collapseAttr">Assign Attributes</legend>
+                <legend class="well well-sm">Assign Attributes</legend>
                   <div class="collapse" id="collapseAttr">
                     <article id="new-stats" class="col-md-6">
                       <legend>Stats</legend>
@@ -166,16 +167,16 @@
                   </div>
               </div>
               <div class="row">
-                <legend class="well well-sm" data-toggle="collapse" data-target="#collapseSpell" aria-expanded="false" aria-controls="collapseSpell">Pick Spells</legend>
+                <legend class="well well-sm">Pick Spells</legend>
                   <div class="collapse" id="collapseSpell">
+                  <h5>Spell list:</h5>
+                  <div id="spell-list">
+                  </div>
                   <form id="add-spell">
                     <select name="spell_id" class="form-control spells">
                     </select>
                     <button type="submit" class="form-button btn btn-default">Add Spell</button>
                   </form>
-                  <h5>Spell list:</h5>
-                  <div id="spell-list">
-                  </div>
                 </div>
               </div>
             </div>
@@ -185,6 +186,8 @@
               <div class="row">
                 <legend class="well well-sm">Info</legend>
                 <form id="edit-info">
+                  <div id="edit-form">
+                  </div>
                   <button type="submit" class="form-button btn btn-default">Edit character</button>
                 </form>
               </div>
