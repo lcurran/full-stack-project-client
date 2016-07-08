@@ -12,11 +12,14 @@ const listCharacters = (characters) => {
   if (characters) {
       $('#character-list').append(characterListingTemplate(characters));
 
-    };
+    }
 };
 
 const newCharacterSuccess = (data) => {
+  // console.log(data);
   app.character = data.character;
+  $('#collapseAttr').collapse('show');
+  $('#collapseSpell').collapse('show');
 };
 
 const viewCharacterSuccess = (data) => {
@@ -26,12 +29,18 @@ const viewCharacterSuccess = (data) => {
 
 const loadEditCharacter = (data) => {
   app.character = data.character;
-  // $('#edit-character-tab').show();
   $('#edit-info').prepend(characterEditTemplate(data.character));
+  $('#name').val(data.character.name);
+  $('#race').val(data.character.race);
+  $('#gender').val(data.character.gender);
+  $('#age').val(data.character.age);
+  $('#alignment').val(data.character.alignment);
+  $('#deity').val(data.character.deity);
 };
 
 const statsForm = (stats) => {
   $('.stats').append(statRow(stats));
+
 };
 
 const skillsForm = (skills) => {
@@ -42,12 +51,21 @@ const spellsForm = (spells) => {
   $('.spells').append(spellForm(spells));
 };
 
+const spellSaveSuccess = (data) => {
+  console.log(data);
+  $('#spell-list').append('<p>' + data.character_spell.spell.name + '</p>');
+};
+
+const blurSave = (data) => {
+  // console.log(data);
+};
+
 const failure = (error) => {
-  console.error(error);
+  // console.error(error);
 };
 
 const success = (data) => {
-  console.log(data);
+  // console.log(data);
 };
 
 module.exports = {
@@ -60,4 +78,6 @@ module.exports = {
   skillsForm,
   spellsForm,
   newCharacterSuccess,
+  spellSaveSuccess,
+  blurSave,
 };

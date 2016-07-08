@@ -24,22 +24,23 @@ const characterData = (form) => {
 };
 
 const statData = (event) => {
-  let character = {};
-  character["character_id"] = app.character.id;
-  character["stat_value"] = event.target.value;
-  character["stat_id"] = event.target.name;
+  let obj = {
+    "character_id": app.character.id,
+    "stat_value": event.target.value,
+    "stat_id": event.target.name
+  }
   let data = {};
-  data['character'] = character;
+  data['character'] = obj;
   return data;
 };
 
 const skillData = (event) => {
-  let character = {};
-  character["character_id"] = app.character.id;
-  character["skill_value"] = event.target.value;
-  character["skill_id"] = event.target.id;
+  let info = {};
+  info["character_id"] = app.character.id;
+  info["skill_value"] = event.target.value;
+  info["skill_id"] = event.target.name;
   let data = {};
-  data['character'] = character;
+  data['character'] = info;
   return data;
 };
 
