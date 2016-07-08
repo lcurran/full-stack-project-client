@@ -1,8 +1,7 @@
 'use strict';
 
 const authEvents = require('./auth/events.js');
-const characterEvents = require('./characters/events.js')
-const ui = require('./auth/ui.js');
+const characterEvents = require('./characters/events.js');
 const rollerEvents = require('./dice-roller/events.js');
 
 const navFormCollapse = () => {

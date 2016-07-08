@@ -66,10 +66,32 @@ const newStat = (data) => {
   });
 };
 
+const updateStat = (data) => {
+  return $.ajax({
+    url: app.host + '/character_stats/' + app.character.id,
+    method: "PATCH",
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+    data
+  });
+};
+
 const newSkill = (data) => {
   return $.ajax({
     url: app.host + '/character_skills/',
     method: "POST",
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+    data
+  });
+};
+
+const updateSkill = (data) => {
+  return $.ajax({
+    url: app.host + '/character_skills/' + app.character.id,
+    method: "PATCH",
     headers: {
       Authorization: 'Token token=' + app.user.token,
     },
@@ -129,4 +151,6 @@ module.exports = {
   deleteCharacter,
   viewCharacter,
   editCharacter,
+  updateStat,
+  updateSkill,
 };

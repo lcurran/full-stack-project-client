@@ -16,14 +16,13 @@ const listCharacters = (characters) => {
 };
 
 const newCharacterSuccess = (data) => {
-  // console.log(data);
   app.character = data.character;
+  console.log(data.character)
   $('#collapseAttr').collapse('show');
   $('#collapseSpell').collapse('show');
 };
 
 const viewCharacterSuccess = (data) => {
-  console.log(data.character);
   $('#view-character').append(characterInfoTemplate(data.character));
 };
 
@@ -45,6 +44,7 @@ const statsForm = (stats) => {
 
 const skillsForm = (skills) => {
   $('.skills').append(skillRow(skills));
+
 };
 
 const spellsForm = (spells) => {
@@ -52,12 +52,17 @@ const spellsForm = (spells) => {
 };
 
 const spellSaveSuccess = (data) => {
-  console.log(data);
   $('#spell-list').append('<p>' + data.character_spell.spell.name + '</p>');
 };
 
-const blurSave = (data) => {
-  // console.log(data);
+const statSave = (data) => {
+  app.character.stats.push(data.character_stat.stat_id);
+};
+
+const skillSave = (data) => {
+  app.character.skills.push(data.character_skill.skill_id);
+  console.log(data);
+  // console.log(app.character);
 };
 
 const failure = (error) => {
@@ -79,5 +84,6 @@ module.exports = {
   spellsForm,
   newCharacterSuccess,
   spellSaveSuccess,
-  blurSave,
+  statSave,
+  skillSave,
 };

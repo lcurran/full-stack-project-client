@@ -1,4 +1,5 @@
 'use strict';
+const app = require('../app.js');
 const api = require('./api');
 const ui = require('./ui');
 const getFormFields = require('../../../lib/get-form-fields');
@@ -76,19 +77,33 @@ const onSaveNewCharacter = (event) => {
 
 const onStatSave = (event) => {
   let data = form.statData(event);
-  if (data.character.stat_value) {
+  let statArray = app.character.stats;
+  let statId = data.character.stat_id;
+
+  if (statArray.includes(+statId)) {
+    api.updateStat(data)
+    .done(ui.success)
+    .fail(ui.failure);
+  } else if (data.character.stat_value) {
     api.newStat(data)
-    .done(ui.blurSave)
+    .done(ui.statSave)
     .fail(ui.failure);
   }
 };
 
 const onSkillSave = (event) => {
   let data = form.skillData(event);
-  console.log(data);
-  if (data.character.skill_value) {
-    api.newSkill(data)
+  // let id = data
+  let skillArray = app.character.skills;
+  let skillId = data.character.skill_id;
+
+  if (skillArray.includes(+skillId)) {
+    api.updateSkill(data)
     .done(ui.success)
+    .fail(ui.failure);
+  } else if (data.character.skill_value) {
+    api.newSkill(data)
+    .done(ui.skillSave)
     .fail(ui.failure);
   }
 };

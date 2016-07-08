@@ -35,12 +35,13 @@ const statData = (event) => {
 };
 
 const skillData = (event) => {
-  let info = {};
-  info["character_id"] = app.character.id;
-  info["skill_value"] = event.target.value;
-  info["skill_id"] = event.target.name;
+  let obj = {
+    "character_id": app.character.id,
+    "skill_value": event.target.value,
+    "skill_id": event.target.name
+  }
   let data = {};
-  data['character'] = info;
+  data['character'] = obj;
   return data;
 };
 
